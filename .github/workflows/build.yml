@@ -7,10 +7,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # v3 yerine v4 yaptık
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4 # v3 yerine v4 yaptık
         with:
           dotnet-version: 6.0.x
 
@@ -22,7 +22,7 @@ jobs:
         run: dotnet publish YahyaStealth.csproj -c Release -r win-x64 /p:PublishSingleFile=true /p:PublishTrimmed=false
 
       - name: Upload Result
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # BURASI KRİTİK: v3 yerine v4 yaptık
         with:
           name: YahyaStealth-Menu-Exe
           path: bin/Release/net6.0-windows/win-x64/publish/YahyaStealth.exe
