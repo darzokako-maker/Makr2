@@ -1,0 +1,29 @@
+name: Build YahyaStealth
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Auto-Create Project File
+        run: |
+          echo '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>WinExe</OutputType><TargetFramework>net6.0-windows</TargetFramework><UseWindowsForms>true</UseWindowsForms><PublishSingleFile>true</PublishSingleFile><RuntimeIdentifier>win-x64</RuntimeIdentifier><SelfContained>true</SelfContained></PropertyGroup></Project>' > YahyaStealth.csproj
+
+      - name: Publish EXE
+        run: dotnet publish YahyaStealth.csproj -c Release -r win-x64 /p:PublishSingleFile=true /p:PublishTrimmed=false
+
+      - name: Upload Result
+        uses: actions/upload-artifact@v3
+        with:
+          name: YahyaStealth-Menu-Exe
+          path: bin/Release/net6.0-windows/win-x64/publish/YahyaStealth.exe
+          
